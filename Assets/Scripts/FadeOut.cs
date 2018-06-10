@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FadeOut : MonoBehaviour {
 
@@ -10,6 +11,8 @@ public class FadeOut : MonoBehaviour {
     float red, green, blue;
 
     private AudioSource[] audios;
+
+    float clearStartTime;
 
 	// Use this for initialization
 	void Start () {
@@ -61,9 +64,19 @@ public class FadeOut : MonoBehaviour {
             {
                 audios[2].Stop();
                 audios[1].Play();
+                clearStartTime = Time.time;
             }
 
             GetComponent<Image>().color = new Color(red, green, blue, 0.7f);
+
+            Debug.Log(Time.time - clearStartTime);
+
+            if (Time.time - clearStartTime >= 4.675f)
+            {
+                Player.Scene = Player.Scenes.Active;
+                SceneManager.LoadScene("TitleScene");
+
+            }
         }
 	}
 }
