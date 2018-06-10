@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    float speed = 3.0f;
+    float speed = 5.0f;
     float gravity = 9.81f;
 
     Vector3 moveDirection = Vector3.zero;
