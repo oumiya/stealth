@@ -69,8 +69,6 @@ public class FadeOut : MonoBehaviour {
 
             GetComponent<Image>().color = new Color(red, green, blue, 0.7f);
 
-            Debug.Log(Time.time - clearStartTime);
-
             if (Time.time - clearStartTime >= 4.675f)
             {
                 Player.Scene = Player.Scenes.Active;
