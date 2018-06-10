@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 敵のルーチン。
-/// 適当に進んで行って壁にぶつかったらランダムに方向転換する
+/// 敵本体のルーチン。
+/// 移動ルーチンは適当に進んで行って壁にぶつかったらランダムに方向転換する
 /// </summary>
-public class Enemy : MonoBehaviour {
+public class EnemyBody : MonoBehaviour {
 
     enum Direction { Up = 0, Right = 1, Down = 2, Left = 3};
 
