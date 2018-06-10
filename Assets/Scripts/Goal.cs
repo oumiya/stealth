@@ -13,4 +13,16 @@ public class Goal : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (Player.Scene == Player.Scenes.Active)
+        {
+            // Playerとぶつかったらゲームクリア
+            if (other.transform.tag == "Player")
+            {
+                Player.Scene = Player.Scenes.GameClear;
+            }
+        }
+    }
 }

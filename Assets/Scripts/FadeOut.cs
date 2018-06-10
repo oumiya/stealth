@@ -9,7 +9,7 @@ public class FadeOut : MonoBehaviour {
     float alpha;
     float red, green, blue;
 
-    private AudioSource audioSource;
+    private AudioSource[] audios;
 
 	// Use this for initialization
 	void Start () {
@@ -17,16 +17,16 @@ public class FadeOut : MonoBehaviour {
         green = GetComponent<Image>().color.g;
         blue = GetComponent<Image>().color.b;
 
-        audioSource = GetComponent<AudioSource>();
+        audios = GetComponents<AudioSource>();
     }
 	
 	// Update is called once per frame
 	void Update () {
 		if (Player.Scene == Player.Scenes.FadeOut)
         {
-            if (!audioSource.isPlaying)
+            if (!audios[0].isPlaying)
             {
-                audioSource.Play();
+                audios[0].Play();
             }
 
             GetComponent<Image>().color = new Color(red, green, blue, alpha);
@@ -45,12 +45,22 @@ public class FadeOut : MonoBehaviour {
             alpha -= speed;
             if (alpha <= 0f)
             {
-                if (audioSource.isPlaying)
+                if (audios[0].isPlaying)
                 {
-                    audioSource.Stop();
+                    audios[0].Stop();
                 }
                 Player.Scene = Player.Scenes.Active;
             }
+        }
+
+        if (Player.Scene == Player.Scenes.GameClear)
+        {
+            if (!audios[1].isPlaying)
+            {
+                audios[1].Play();
+            }
+
+            GetComponent<Image>().color = new Color(red, green, blue, 0.7f);
         }
 	}
 }

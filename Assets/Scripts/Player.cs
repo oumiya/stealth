@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
     Vector3 initialPosition;
 
-    public enum Scenes { Active, FadeOut, FadeIn};
+    public enum Scenes { Active, FadeOut, FadeIn, GameClear};
 
     public static Scenes Scene = Scenes.Active;
 
