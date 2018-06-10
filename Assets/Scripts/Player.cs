@@ -11,9 +11,13 @@ public class Player : MonoBehaviour {
 
     CharacterController characterController;
 
+    Vector3 initialPosition;
+
 	// Use this for initialization
 	void Start () {
         characterController = GetComponent<CharacterController>();
+        // 初期配置を記憶
+        initialPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -29,4 +33,16 @@ public class Player : MonoBehaviour {
         moveDirection.y -= gravity * Time.deltaTime;
         characterController.Move(moveDirection * Time.deltaTime);
 	}
+
+    public void Restart()
+    {
+        // 主人公と敵を全て初期位置に戻す
+        transform.position = initialPosition;
+
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemys)
+        {
+            enemy.GetComponent<EnemyBody>().Restart();
+        }
+    }
 }

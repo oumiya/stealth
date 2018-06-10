@@ -12,9 +12,14 @@ public class EnemyBody : MonoBehaviour {
 
     float speed = 3.0f;
 
+    Vector3 initialPosition;
+    Vector3 initialForward;
+
 	// Use this for initialization
 	void Start () {
-
+        // 初期配置の場所を覚えておく
+        initialPosition = transform.position;
+        initialForward = transform.forward;
 	}
 	
 	// Update is called once per frame
@@ -47,5 +52,11 @@ public class EnemyBody : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    public void Restart()
+    {
+        transform.position = initialPosition;
+        transform.forward = initialForward;
     }
 }

@@ -21,5 +21,11 @@ public class Vision : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        // 主人公とぶつかったらゲームオーバー
+        if (other.tag == "Player")
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<Player>().Restart();
+        }
     }
 }
