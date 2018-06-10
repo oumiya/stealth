@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -13,6 +14,10 @@ public class Player : MonoBehaviour {
 
     Vector3 initialPosition;
 
+    public enum Scenes { Active, FadeOut, FadeIn};
+
+    public static Scenes Scene = Scenes.Active;
+
 	// Use this for initialization
 	void Start () {
         characterController = GetComponent<CharacterController>();
@@ -22,16 +27,18 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (characterController.isGrounded)
+        if (Player.Scene == Scenes.Active)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-        }
+            if (characterController.isGrounded)
+            {
+                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= speed;
+            }
 
-        moveDirection.y -= gravity * Time.deltaTime;
-        characterController.Move(moveDirection * Time.deltaTime);
+            moveDirection.y -= gravity * Time.deltaTime;
+            characterController.Move(moveDirection * Time.deltaTime);
+        }
 	}
 
     public void Restart()

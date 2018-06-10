@@ -4,7 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// 敵本体のルーチン。
-/// 移動ルーチンは適当に進んで行って壁にぶつかったらランダムに方向転換する
+/// 移動ルーチンは適当に進んで行って壁や敵にぶつかったらランダムに方向転換する
 /// </summary>
 public class EnemyBody : MonoBehaviour {
 
@@ -17,6 +17,24 @@ public class EnemyBody : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // 初期に向いている角度を決定
+        Direction d = (Direction)Random.Range(0, 4);
+
+        switch (d)
+        {
+            case Direction.Up:
+                break;
+            case Direction.Right:
+                transform.forward = transform.right;
+                break;
+            case Direction.Down:
+                transform.forward = -transform.forward;
+                break;
+            case Direction.Left:
+                transform.forward = -transform.right;
+                break;
+        }
+
         // 初期配置の場所を覚えておく
         initialPosition = transform.position;
         initialForward = transform.forward;
@@ -24,32 +42,37 @@ public class EnemyBody : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        // 壁にぶつかったら右か左にランダムで方向転換する
-        transform.position += transform.forward * speed * Time.deltaTime;
+        if (Player.Scene == Player.Scenes.Active)
+        {
+            // 壁にぶつかったら右か左にランダムで方向転換する
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        // 壁とぶつかったらしい
-        if ( other.transform.tag == "Wall")
+        if (Player.Scene == Player.Scenes.Active)
         {
-            // 後退して壁から離れる
-            transform.position -= transform.forward * speed * 2 * Time.deltaTime;
-
-            Direction d = (Direction)Random.Range(1, 4);
-
-            // 壁にぶつかったら方向転換する
-            switch(d)
+            // 壁や敵とぶつかったら方向転換
+            if (other.transform.tag == "Wall" || other.transform.tag == "Enemy")
             {
-                case Direction.Right:
-                    transform.forward = transform.right;
-                    break;
-                case Direction.Down:
-                    transform.forward = -transform.forward;
-                    break;
-                case Direction.Left:
-                    transform.forward = -transform.right;
-                    break;
+                // 後退して壁から離れる
+                transform.position -= transform.forward * speed * 2 * Time.deltaTime;
+
+                Direction d = (Direction)Random.Range(1, 4);
+
+                switch (d)
+                {
+                    case Direction.Right:
+                        transform.forward = transform.right;
+                        break;
+                    case Direction.Down:
+                        transform.forward = -transform.forward;
+                        break;
+                    case Direction.Left:
+                        transform.forward = -transform.right;
+                        break;
+                }
             }
         }
     }
