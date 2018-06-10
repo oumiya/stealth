@@ -18,6 +18,8 @@ public class FadeOut : MonoBehaviour {
         blue = GetComponent<Image>().color.b;
 
         audios = GetComponents<AudioSource>();
+
+        audios[2].Play();
     }
 	
 	// Update is called once per frame
@@ -57,6 +59,7 @@ public class FadeOut : MonoBehaviour {
         {
             if (!audios[1].isPlaying)
             {
+                audios[2].Stop();
                 audios[1].Play();
             }
 
